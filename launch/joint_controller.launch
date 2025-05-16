@@ -1,0 +1,29 @@
+<launch>
+   <!-- values passed by command line input -->     
+   <arg name="model" />
+   <arg name="gui" default="True" />
+   <arg name="robot_mode" default="sim"/>
+   <arg name="controller" default="pos"/>
+   <arg name="input_mode" default="test"/>
+   <arg name="rev" default="front"/>
+
+   <!-- set these parameters on Parameter Server -->
+   <param name="robot_description" command="cat $(find kortex_description)/robots/gen3_7dof_vision.urdf" />
+   <param name="use_gui" value="$(arg gui)"/>
+
+   <!-- Start nodes -->
+   <node name="controller_node" pkg="joint_controller_pkg" type="controller.py" output="screen">
+        <param name="robot_mode" value="$(arg robot_mode)"/>
+        <param name="controller" value="$(arg controller)"/>
+    </node>
+
+    <node name="driver_node" pkg="joint_controller_pkg" type="driver.py" output="screen">
+        <param name="input_mode" value="$(arg input_mode)"/>
+        <param name="rev" value="$(arg rev)"/>
+    </node>
+
+   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+
+   <!-- <node name="rviz" pkg="rviz" type="rviz?" args="-d $(find joint_controller_pkg)/urdf.rviz" required="true" /> -->
+   <!-- (required = "true") if rviz dies, entire roslaunch will be killed -->
+</launch>
