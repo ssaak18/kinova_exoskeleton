@@ -15,7 +15,7 @@ source devel/setup.bash
 roslaunch joint_controller_pkg joint_controller.launch
 ```
 
-If system does not have USB port access run: `sudo chmod a+rw /dev/ttyUSB0``
+If system does not have USB port access run: ``sudo chmod a+rw /dev/ttyUSB0``
 
 Parameters:
  - robot_mode: sim | kinova
